@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as webpack from 'webpack';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
 async function getPages(dirname: string): Promise<string[]> {
     const contents = await fs.promises.readdir(dirname, { withFileTypes: true });
@@ -75,6 +76,9 @@ async function baseConfig(): Promise<webpack.Configuration> {
             path: path.resolve(__dirname, 'dist'),
             filename: '[name].[contenthash].bundle.js',
         },
+        plugins: [
+            new ESLintPlugin(),
+        ],
     }
 };
 
