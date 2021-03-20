@@ -7,12 +7,13 @@ const devConfig = async (): Promise<webpack.Configuration> => {
     const htmlPlugins = await getPages('./src/pages')
         .then(pages => pages
               .filter((page: string): boolean => !page.includes('vendor.ts'))
-              .map((page: string): string => page.replace('.ts', '.html').replace('/src', ''))
+              .map((page: string): string => page.replace('.ts', '.html').replace('/src/pages', ''))
               .map((page: string): HTMLPlugin => new HTMLPlugin({ filename: page }))
         );
     return {
         ...config,
         mode: 'development',
+        watch: true,
         module: {
             rules: [
                 {
