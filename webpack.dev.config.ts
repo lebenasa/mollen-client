@@ -13,7 +13,6 @@ const devConfig = async (): Promise<webpack.Configuration> => {
     return {
         ...config,
         mode: 'development',
-        watch: true,
         module: {
             rules: [
                 {
