@@ -1,8 +1,15 @@
-import baseConfig, { typescriptLoader, sassLoader } from './webpack.config';
+import baseConfig, { typescriptLoader, sassLoader, getPages } from './webpack.config';
 import * as webpack from 'webpack';
+import HTMLPlugin from 'html-webpack-plugin';
 
 const devConfig = async (): Promise<webpack.Configuration> => {
     const config = await baseConfig();
+    const htmlPlugins = await getPages('./src/pages')
+        .then(pages => pages
+              .filter((page: string): boolean => !page.includes('vendor.ts'))
+              .map((page: string): string => page.replace('.ts', '.html').replace('/src', ''))
+              .map((page: string): HTMLPlugin => new HTMLPlugin({ filename: page }))
+        );
     return {
         ...config,
         mode: 'development',
@@ -38,10 +45,14 @@ const devConfig = async (): Promise<webpack.Configuration> => {
             ],
         },
         devtool: 'inline-source-map',
+        devServer: {
+            contentBase: './dist',
+        },
         output: {
             ...config.output,
             filename: '[name].bundle.js',
         },
+        plugins: config.plugins!.concat(...htmlPlugins),
     };
 };
 

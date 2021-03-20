@@ -4,7 +4,7 @@ import * as os from 'os';
 import * as webpack from 'webpack';
 import ESLintPlugin from 'eslint-webpack-plugin';
 
-async function getPages(dirname: string): Promise<string[]> {
+export async function getPages(dirname: string): Promise<string[]> {
     const contents = await fs.promises.readdir(dirname, { withFileTypes: true });
     const pages = contents
         .filter(content => !content.isDirectory())
@@ -41,7 +41,7 @@ export const sassLoader = {
 };
 
 async function baseConfig(): Promise<webpack.Configuration> {
-    const pages = await getPages('./src/pages/');
+    const pages = await getPages('./src/pages');
     const pageEntries = Object.fromEntries(
         pages.map(page => {
             const nonentryNames = [
@@ -52,8 +52,12 @@ async function baseConfig(): Promise<webpack.Configuration> {
             const entry = page.split('/')
                 .slice(0, -1)
                 .filter(pathname => nonentryNames.every(n => n !== pathname))
-                .join('/')
-            return [entry === '' ? 'index' : entry, page];
+                .join('/');
+            const options = {
+                import: page,
+                dependOn: 'vendor',
+            };
+            return [entry === '' ? 'index' : entry, options];
         }),
     );
 
@@ -68,6 +72,7 @@ async function baseConfig(): Promise<webpack.Configuration> {
         resolve: {
             extensions: ['.tsx', '.ts', '.js', '.sass'],
         },
+        context: __dirname,
         entry: {
             ...pageEntries,
             vendor: './src/vendor.ts',
