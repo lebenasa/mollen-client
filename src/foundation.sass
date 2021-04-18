@@ -1,3 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Roboto:ital,wght@0,400;0,500;1,400&display=swap')
+
+$midnight: #000839
+$steel: #005082
+$sky: #00a8cc
+$yolk: #ffa41b
+$paper: #ecfbfc
+
 body
     display: block
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif
+    font-family: 'Roboto', Arial, sans-serif
+    font-size: 16px
+    background: $midnight
+    color: $paper
+
+h1
+    display: block
+    font-family: 'Merriweather', serif
+
+h2
+    display: block
+    font-family: 'Merriweather', serif
+
+h1 > p,
+h2 > p
+    display: block
+    font-family: 'Merriweather', serif
+
+.layout--two-columns
+    display: block
+    max-width: 1280px
+    margin: 0 auto
+
+.layout--single-column
+    display: block
+    max-width: 900px
+    margin: 0 auto
+
+.layout--full
+    display: block
