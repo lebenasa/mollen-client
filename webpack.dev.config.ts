@@ -14,9 +14,6 @@ const devConfig = async (): Promise<webpack.Configuration> => {
                   filename: entry.replace('.ts', '.html'),
               }))
         );
-    htmlPlugins.forEach(htmlPlugin => {
-        console.log(htmlPlugin.userOptions.chunks);
-    })
     return {
         ...config,
         mode: 'development',
@@ -54,6 +51,7 @@ const devConfig = async (): Promise<webpack.Configuration> => {
         devtool: 'inline-source-map',
         devServer: {
             contentBase: './dist',
+            hot: true,
         },
         output: {
             ...config.output,
