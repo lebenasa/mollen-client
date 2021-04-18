@@ -1,6 +1,7 @@
 import baseConfig, { typescriptLoader, sassLoader, getPages } from './webpack.config';
 import * as webpack from 'webpack';
 import HTMLPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const devConfig = async (): Promise<webpack.Configuration> => {
     const config = await baseConfig();
@@ -27,7 +28,7 @@ const devConfig = async (): Promise<webpack.Configuration> => {
                 {
                     ...sassLoader,
                     use: [
-                        'mini-css-extract-plugin',
+                        MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {

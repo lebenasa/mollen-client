@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as webpack from 'webpack';
 import ESLintPlugin from 'eslint-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export async function getPages(dirname: string): Promise<string[]> {
     const contents = await fs.promises.readdir(dirname, { withFileTypes: true });
@@ -34,7 +35,7 @@ export const typescriptLoader = {
 export const sassLoader = {
     test: /\.s[ac]ss$/,
     use: [
-        'mini-css-extract-plugin',
+        MiniCssExtractPlugin.loader,
         'css-loader',
         'sass-loader',
     ],
@@ -83,6 +84,7 @@ async function baseConfig(): Promise<webpack.Configuration> {
         },
         plugins: [
             new ESLintPlugin(),
+            new MiniCssExtractPlugin(),
         ],
     }
 };
