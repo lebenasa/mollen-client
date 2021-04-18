@@ -8,9 +8,15 @@ const devConfig = async (): Promise<webpack.Configuration> => {
     const htmlPlugins = await getPages('./src/pages')
         .then(pages => pages
               .filter((page: string): boolean => !page.includes('vendor.ts'))
-              .map((page: string): string => page.replace('.ts', '.html').replace('/src/pages', ''))
-              .map((page: string): HTMLPlugin => new HTMLPlugin({ filename: page }))
+              .map((page: string): string => page.replace('./src/pages/', ''))
+              .map((entry: string): HTMLPlugin => new HTMLPlugin({
+                  chunks: ['vendor', entry],
+                  filename: entry.replace('.ts', '.html'),
+              }))
         );
+    htmlPlugins.forEach(htmlPlugin => {
+        console.log(htmlPlugin.userOptions.chunks);
+    })
     return {
         ...config,
         mode: 'development',

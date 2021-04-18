@@ -43,15 +43,14 @@ export const sassLoader = {
 
 async function baseConfig(): Promise<webpack.Configuration> {
     const pages = await getPages('./src/pages');
+    const nonentryNames = [
+        ...os.homedir().split('/'),
+        '.', 'src', 'pages',
+        '',
+    ];
     const pageEntries = Object.fromEntries(
         pages.map(page => {
-            const nonentryNames = [
-                ...os.homedir().split('/'),
-                '.', 'src', 'pages',
-                '',
-            ];
             const entry = page.split('/')
-                .slice(0, -1)
                 .filter(pathname => nonentryNames.every(n => n !== pathname))
                 .join('/');
             const options = {
