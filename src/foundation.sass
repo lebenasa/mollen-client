@@ -8,10 +8,13 @@ $paper: #ecfbfc
 
 body
     display: block
-    font-family: 'Roboto', Arial, sans-serif
     font-size: 16px
     background: $midnight
     color: $paper
+
+html, button, input, select, textarea, p, a,
+.pure-g [class *= "pure-u"]
+    font-family: 'Roboto', Arial, sans-serif
 
 h1
     display: block
@@ -26,6 +29,24 @@ h2 > p
     display: block
     font-family: 'Merriweather', serif
 
+a
+    color: $yolk
+    font-size: 1rem
+    font-weight: 500
+    text-decoration: none
+
+    &:focus,
+    &:active,
+    &:hover
+        text-decoration: underline
+
+    &:visited
+        color: $sky
+
+code
+    font-family: Monaco, Consolas, Courier New, Courier, monospace
+    font-size: 1.125rem
+
 .layout--two-columns
     display: block
     max-width: 1280px
@@ -38,3 +59,6 @@ h2 > p
 
 .layout--full
     display: block
+
+.pure-g
+    align-items: last baseline
